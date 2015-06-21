@@ -50,6 +50,23 @@ class Counter
 
         return $hits;
     }
+    
+    public function count($identifier, $id = null)
+    {
+       $page = self::pageId($identifier, $id);
+
+        $addHit = true;
+
+        if (self::$ignore_bots && $this->visitor->isCrawler()) {
+            $addHit = false;
+        }
+        if (self::$honor_do_not_track && $this->hasDnt) {
+            $addHit = false;
+        }
+        if ($addHit) {
+            self::createCountIfNotPresent($page);
+        }
+    }
 
     /*
      * Return hit count for every page on the site.
