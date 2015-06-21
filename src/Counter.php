@@ -14,16 +14,16 @@ class Counter
     // Don't count the hit if the browser sends the DNT: 1 header.
     const HONOR_DO_NOT_TRACK = false;
 
-    /**
-     * Show counter for page. For static pages just use $identifier
-     * For dynamic pages use $identifer with an $id of the record
-     * Example Static: Counter::show('home-page');
-     * Example Dynamic: Counter::show('user-profile', $user->id);
-     * @param $identifier string
-     * @param null $id
-     * @return int
-     */
     public function show($identifier, $id = null)
+    {
+        $page = self::pageId($identifier, $id);
+        
+        $hits = self::countHits($page);
+
+        return $hits;
+    }
+
+    public function showAndCount($identifier, $id = null)
     {
         $page = self::pageId($identifier, $id);
 
@@ -109,12 +109,19 @@ class Counter
         
         return $visitor_record;
     }
-
-    public static function createCountIfNotPresent($page)
+    
+    public static function createPageIfNotPresent($page)
     {
         $page_record = Page::firstOrCreate([
             'page' => $page
         ]);
+        
+        return $page_record;
+    }
+
+    public static function createCountIfNotPresent($page)
+    {
+        $page_record = self::createPageIfNotPresent($page);
 
         $visitor = self::hashVisitor($page);
         
@@ -125,7 +132,7 @@ class Counter
 
     public static function countHits($page)
     {
-        $page_record = Page::where('page', $page)->first();
+        $page_record = self::createPageIfNotPresent($page);
 
         return number_format($page_record->visitors->count());
     }
