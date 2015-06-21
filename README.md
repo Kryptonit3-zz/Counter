@@ -22,11 +22,13 @@ Add the following to your `config\app.php` Facades
 
 #### How to Use
 
-For regular pages you just add `Counter::show('home')` (for blades uses `{{ Counter::show('home') }}`. Change `home` to a unique name for the page you are working with.
+For regular pages you just add `Counter::showAndCount('home')` ( for blades uses `{{ Counter::showAndCount('home') }}` ). Change `home` to a unique name for the page you are working with.
 
-For dynamic pages, such as user profiles, or job listings etc you may provide a dynamic element like this `Counter::show('user-profile', $user->id)` ( for blades use `{{ Counter::show('user-profile', $user->id) }}` ) Change `user-profile` to a unique name for the page you are working with.
+For dynamic pages, such as user profiles, or job listings etc you may provide a dynamic element like this `Counter::showAndCount('user-profile', $user->id)` ( for blades use `{{ Counter::showAndCount('user-profile', $user->id) }}` ) Change `user-profile` to a unique name for the page you are working with.
 
 Number output is already formatted. So 3000 visitors will render as 3,000
+
+If you have records on a page but do not want to count visiting the page displaying the records as a hit on the record itself then change `showAndCount` to just `show`. Example `Counter::show('job-listings', $job->id)` ( for blades use `{{ Counter::show('job-listings', $job->id) }}` )
 
 Enjoy!
 
