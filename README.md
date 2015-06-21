@@ -42,4 +42,8 @@ Package influenced by: https://github.com/defuse/phpcount
 
 Pull requests are welcome.
 
+How this differs from: https://github.com/weboAp/Visitor
+
+This package lets you see hit counts for specific pages/objects as well as an overall site hit count.
+
 
