@@ -40,4 +40,6 @@ Enjoy!
 
 Package influenced by: https://github.com/defuse/phpcount
 
+Pull requests are welcome.
+
 
