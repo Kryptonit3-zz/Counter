@@ -15,7 +15,6 @@ class CreateKryptonit3CounterVisitorTable extends Migration
         Schema::create('kryptonit3_counter_visitor', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('visitor')->unique();
-            $table->timestamps();
         });
     }
 
