@@ -1,0 +1,21 @@
+{
+    "name": "kryptonit3/counter",
+    "description": "Hit counter for your pages.",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Jesse Szypulski",
+        "email": "jesse.szypulski@gmail.com"
+      }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Kryptonit3\\Counter\\": "src/"
+        }
+    },
+    "require": {
+        "ramsey/uuid": "~2.8",
+        "illuminate/support": "~5.0",
+        "php": ">=5.3.3"
+    }
+}
