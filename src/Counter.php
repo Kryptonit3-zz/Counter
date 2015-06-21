@@ -100,6 +100,15 @@ class Counter
 
         return $uuid5;
     }
+    
+    public static function createVisitorRecordIfNotPresent($visitor)
+    {
+        $visitor_record = Visitor::firstOrCreate([
+            'visitor' => $visitor; 
+        ]);
+        
+        return $visitor_record;
+    }
 
     public static function createCountIfNotPresent($page)
     {
@@ -108,8 +117,10 @@ class Counter
         ]);
 
         $visitor = self::hashVisitor($page);
+        
+        $visitor_record = self::createVisitorRecordIfNotPresent($visitor);
 
-        $page_record->visitors()->sync([$visitor]);
+        $page_record->visitors()->sync([$visitor_record->id]);
     }
 
     public static function countHits($page)
