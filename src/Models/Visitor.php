@@ -9,6 +9,8 @@ class Visitor extends Model
     protected $table = 'kryptonit3_counter_visitor';
 
     protected $fillable = ['visitor'];
+    
+    public $timestamps = false;
 
     public function pages()
     {
