@@ -104,7 +104,7 @@ class Counter
     public static function createVisitorRecordIfNotPresent($visitor)
     {
         $visitor_record = Visitor::firstOrCreate([
-            'visitor' => $visitor; 
+            'visitor' => $visitor
         ]);
         
         return $visitor_record;
