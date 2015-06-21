@@ -32,3 +32,6 @@ Enjoy!
 + Add Caching
 
 
+Package influenced by: https://github.com/defuse/phpcount
+
+
