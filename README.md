@@ -29,6 +29,6 @@ Number output is already formatted. So 3000 visitors will render as 3,000
 Enjoy!
 
 ##### To-Do List
-[*] Add Caching
++ Add Caching
 
 
