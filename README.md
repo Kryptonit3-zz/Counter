@@ -32,7 +32,7 @@ If you have records on a page but do not want to count visiting the page display
 
 You may get all hits for every page on the entire site with `Counter::allHits()` ( for blades use `{{ Counter::allHits() }}` ). To specify a day constraint, like only all hits for the past 30 days then do `Counter::allHits(30)` (for blades use `{{ Counter::allHits(30) }}` ).
 
-If you would just like to process a hit for a page without displaying anything then just use `count`. Works the same as all previous examples for both static and dynamic pages. Useful for counting hits for a page without letting everyone see.
+If you would just like to process a hit for a page without displaying anything then just use `Counter::count('user-profile', $user->id)`. Works the same as all previous examples for both static and dynamic pages, blade is the same syntax. Useful for counting hits for a page without letting everyone see.
 
 Enjoy!
 
