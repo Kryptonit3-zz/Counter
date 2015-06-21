@@ -74,7 +74,7 @@ class Counter
         return hash("SHA256", $page . $visitor);
     }
 
-    public static function pageId($identifier, $id = null)
+    private static function pageId($identifier, $id = null)
     {
         $uuid5 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $identifier);
         if ($id) {
@@ -84,7 +84,7 @@ class Counter
         return $uuid5;
     }
     
-    public static function createVisitorRecordIfNotPresent($visitor)
+    private static function createVisitorRecordIfNotPresent($visitor)
     {
         $visitor_record = Visitor::firstOrCreate([
             'visitor' => $visitor
@@ -93,7 +93,7 @@ class Counter
         return $visitor_record;
     }
     
-    public static function createPageIfNotPresent($page)
+    private static function createPageIfNotPresent($page)
     {
         $page_record = Page::firstOrCreate([
             'page' => $page
@@ -102,7 +102,7 @@ class Counter
         return $page_record;
     }
 
-    public static function createCountIfNotPresent($page)
+    private static function createCountIfNotPresent($page)
     {
         $page_record = self::createPageIfNotPresent($page);
 
@@ -113,7 +113,7 @@ class Counter
         $page_record->visitors()->sync([$visitor_record->id]);
     }
 
-    public static function countHits($page)
+    private static function countHits($page)
     {
         $page_record = self::createPageIfNotPresent($page);
 
