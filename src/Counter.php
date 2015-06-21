@@ -17,10 +17,10 @@ class Counter
     }
 
     // Don't count hits from search robots and crawlers.
-    public static $ignore_bots = true;
+    private static $ignore_bots = true;
 
     // Don't count the hit if the browser sends the DNT: 1 header.
-    public static $honor_do_not_track = false;
+    private static $honor_do_not_track = false;
 
     public function show($identifier, $id = null)
     {
