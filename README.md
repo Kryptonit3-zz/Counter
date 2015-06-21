@@ -4,11 +4,13 @@
 
 Run the following commands:
 
-`composer require kryptonit3/counter`
+~~~
+composer require kryptonit3/counter
 
-`php artisan vendor:publish --provider="Kryptonit3\Counter\CounterServiceProvider" --tag="migrations"`
+php artisan vendor:publish --provider="Kryptonit3\Counter\CounterServiceProvider" --tag="migrations"
 
-`php artisan migrate`
+php artisan migrate
+~~~
 
 Add the following to your `config\app.php` Service Providers
 
