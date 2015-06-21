@@ -5,14 +5,22 @@ namespace Kryptonit3\Counter;
 use Kryptonit3\Counter\Models\Page;
 use Kryptonit3\Counter\Models\Visitor;
 use Rhumsaa\Uuid\Uuid;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Carbon\Carbon;
 
 class Counter
 {
+    public function __construct(CrawlerDetect $visitor)
+    {
+        $this->visitor = $visitor;    
+    }
+    
     // Don't count hits from search robots and crawlers.
-    const IGNORE_SEARCH_BOTS = true;
+    public $ignore_bots = true;
     // Don't count the hit if the browser sends the DNT: 1 header.
-    const HONOR_DO_NOT_TRACK = false;
+    public $honor_do_not_track = false;
+    
+    public $dnt_present = (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1) ? true : false;
 
     public function show($identifier, $id = null)
     {
@@ -29,11 +37,10 @@ class Counter
 
         $addHit = true;
 
-        if (self::IGNORE_SEARCH_BOTS && self::IsSearchBot()) {
+        if ($inore_bots && $this->visitor->isCrawler()) {
             $addHit = false;
         }
-        if (self::HONOR_DO_NOT_TRACK &&
-            isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == "1") {
+        if ($honor_do_not_track && $dnt_present) {
             $addHit = false;
         }
         if ($addHit) {
@@ -60,30 +67,6 @@ class Counter
 
 
     /*====================== PRIVATE METHODS =============================*/
-
-    private static function IsSearchBot()
-    {
-        // Of course, this is not perfect, but it at least catches the major
-        // search engines that index most often.
-        $keywords = [
-            'bot',
-            'spider',
-            'spyder',
-            'crawlwer',
-            'walker',
-            'search',
-            'yahoo',
-            'holmes',
-            'htdig',
-            'archive',
-            'tineye',
-            'yacy',
-            'yeti',
-        ];
-        $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-
-        return (in_array($agent, $keywords)) ? true : false;
-    }
 
     private static function hashVisitor($page)
     {
