@@ -12,15 +12,15 @@ class Counter
 {
     public function __construct(CrawlerDetect $visitor)
     {
-        $this->visitor = $visitor;    
+        $this->visitor = $visitor;
+        $this->hasDnt = (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1) ? true : false;
     }
-    
+
     // Don't count hits from search robots and crawlers.
-    public $ignore_bots = true;
+    public static $ignore_bots = true;
+
     // Don't count the hit if the browser sends the DNT: 1 header.
-    public $honor_do_not_track = false;
-    
-    public $dnt_present = (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1) ? true : false;
+    public static $honor_do_not_track = false;
 
     public function show($identifier, $id = null)
     {
@@ -37,10 +37,10 @@ class Counter
 
         $addHit = true;
 
-        if ($inore_bots && $this->visitor->isCrawler()) {
+        if (self::$ignore_bots && $this->visitor->isCrawler()) {
             $addHit = false;
         }
-        if ($honor_do_not_track && $dnt_present) {
+        if (self::$honor_do_not_track && $this->hasDnt) {
             $addHit = false;
         }
         if ($addHit) {
