@@ -77,9 +77,10 @@ class Counter
     public function allHits($days = null)
     {
         $prefix = config('database.connections.' . config('database.default') . '.prefix');
-        $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')->count();
         if ($days) {
             $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')->where('created_at', '>=', Carbon::now()->subDays($days))->count();
+        } else {
+            $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')->count();
         }
         return number_format($hits);
     }
