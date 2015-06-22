@@ -127,7 +127,7 @@ class Counter
      * @param string $page
      * @return null
      */
-    private static function processHit($page)
+    private function processHit($page)
     {
         $addHit = true;
 
