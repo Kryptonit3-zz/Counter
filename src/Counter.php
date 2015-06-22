@@ -68,17 +68,8 @@ class Counter
     {
         $page = self::pageId($identifier, $id);
 
-        $addHit = true;
-
-        if (self::$ignore_bots && $this->visitor->isCrawler()) {
-            $addHit = false;
-        }
-        if (self::$honor_do_not_track && $this->hasDnt) {
-            $addHit = false;
-        }
-        if ($addHit) {
-            self::createCountIfNotPresent($page);
-        }
+        self::processHit($page);
+        
         $hits = self::countHits($page);
 
         return $hits;
@@ -102,15 +93,7 @@ class Counter
 
         $addHit = true;
 
-        if (self::$ignore_bots && $this->visitor->isCrawler()) {
-            $addHit = false;
-        }
-        if (self::$honor_do_not_track && $this->hasDnt) {
-            $addHit = false;
-        }
-        if ($addHit) {
-            self::createCountIfNotPresent($page);
-        }
+        self::processHit($page);
     }
 
     /**
@@ -139,6 +122,27 @@ class Counter
 
 
     /*====================== PRIVATE METHODS =============================*/
+
+    /**
+     * Processes the hit request for the page in question.
+     * 
+     * @param string $page
+     * @return null
+     */
+    private static function processHit($page)
+    {
+        $addHit = true;
+
+        if (self::$ignore_bots && $this->visitor->isCrawler()) {
+            $addHit = false;
+        }
+        if (self::$honor_do_not_track && $this->hasDnt) {
+            $addHit = false;
+        }
+        if ($addHit) {
+            self::createCountIfNotPresent($page);
+        }
+    }
 
     /**
      * Generates a hash based on APP_KEY and current visitors IP Address.
