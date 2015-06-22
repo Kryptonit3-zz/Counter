@@ -91,8 +91,6 @@ class Counter
     {
         $page = self::pageId($identifier, $id);
 
-        $addHit = true;
-
         self::processHit($page);
     }
 
