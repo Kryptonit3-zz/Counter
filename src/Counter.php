@@ -17,21 +17,53 @@ class Counter
         $this->hasDnt = (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1) ? true : false;
     }
 
-    // Don't count hits from search robots and crawlers.
+    /**
+     * Check to determine if bots/crawlers will be
+     * counted as hits.
+     *
+     * @var bool
+     */
     private static $ignore_bots = true;
 
-    // Don't count the hit if the browser sends the DNT: 1 header.
+    /**
+     * Check to determine if we will count hits
+     * from visitors that send a DO NOT TRACK header.
+     *
+     * @var bool
+     */
     private static $honor_do_not_track = false;
 
+    /**
+     * Show view count for the requested page.
+     *
+     * Use this when you just want to show the current view count
+     * for the page in question. Does not add counts.
+     *
+     * @param string $identifier A unique string to the page you are tracking
+     * @param null|integer $id A unique identifier for dynamic page tracking
+     * @return string Unique view count for requested resource
+     */
     public function show($identifier, $id = null)
     {
         $page = self::pageId($identifier, $id);
-        
+
         $hits = self::countHits($page);
 
         return $hits;
     }
 
+    /**
+     * Show view count for the requested page while adding
+     * count if it does not already exist for the current user
+     * and page.
+     *
+     * Use this for pages that you want to show the count, while
+     * also incrementing the count.
+     *
+     * @param string $identifier
+     * @param null|integer $id
+     * @return string Unique view count for requested resource
+     */
     public function showAndCount($identifier, $id = null)
     {
         $page = self::pageId($identifier, $id);
@@ -51,10 +83,22 @@ class Counter
 
         return $hits;
     }
-    
+
+    /**
+     * Increase count for page without returning count.
+     *
+     * This can be used for a number of things. To count pages
+     * if you intend to show the count elsewhere or show the count
+     * if conditions are met. Ex: Count profile views, but only
+     * show the view count to the profile user with show()
+     *
+     * @param string $identifier
+     * @param null|integer $id
+     * @return null
+     */
     public function count($identifier, $id = null)
     {
-       $page = self::pageId($identifier, $id);
+        $page = self::pageId($identifier, $id);
 
         $addHit = true;
 
@@ -69,34 +113,53 @@ class Counter
         }
     }
 
-    /*
-     * Return hit count for every page on the site.
-     * You may specify a day constraint.
-     * Example Last 30 Days: Counter::allHits(30);
+    /**
+     * Return view count for all pages on the site.
+     * You may supply an integer if you would like to
+     * restrict counted views to a certain amount of days.
+     *
+     * Example: Show total views for the last 30 days
+     * Counter::allHits(30)
+     *
+     * @param null|integer $days
+     * @return string Unique view count for all pages
      */
     public function allHits($days = null)
     {
         $prefix = config('database.connections.' . config('database.default') . '.prefix');
         if ($days) {
             $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')
-                        ->where('created_at', '>=', Carbon::now()->subDays($days))->count();
+                ->where('created_at', '>=', Carbon::now()->subDays($days))->count();
         } else {
             $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')->count();
         }
-        
+
         return number_format($hits);
     }
 
 
     /*====================== PRIVATE METHODS =============================*/
 
+    /**
+     * Generates a hash based on page identifier and current visitors IP Address.
+     *
+     * @param string $page The hashed page identifier to salt IP Address with.
+     * @return string
+     */
     private static function hashVisitor($page)
     {
         $visitor = $_SERVER['REMOTE_ADDR'];
-        
+
         return hash("SHA256", $page . $visitor);
     }
 
+    /**
+     * Generates a hash based on page identifier
+     *
+     * @param string $identifier
+     * @param null|integer $id
+     * @return string
+     */
     private static function pageId($identifier, $id = null)
     {
         $uuid5 = Uuid::uuid5(Uuid::NAMESPACE_DNS, $identifier);
@@ -106,36 +169,60 @@ class Counter
 
         return $uuid5;
     }
-    
+
+    /**
+     * Create and/or grab the visitor record
+     *
+     * @param string $visitor hash provided by hashVisitor()
+     * @return object Visitor eloquent object.
+     */
     private static function createVisitorRecordIfNotPresent($visitor)
     {
         $visitor_record = Visitor::firstOrCreate([
             'visitor' => $visitor
         ]);
-        
+
         return $visitor_record;
     }
-    
+
+    /**
+     * Create and/or grab the page record
+     *
+     * @param string $page hash provided by pageId()
+     * @return object Page eloquent object.
+     */
     private static function createPageIfNotPresent($page)
     {
         $page_record = Page::firstOrCreate([
             'page' => $page
         ]);
-        
+
         return $page_record;
     }
 
+    /**
+     * Create the count record if it does not exist.
+     *
+     * @param string $page hash provided by pageId()
+     * @return null
+     */
     private static function createCountIfNotPresent($page)
     {
         $page_record = self::createPageIfNotPresent($page);
 
         $visitor = self::hashVisitor($page);
-        
+
         $visitor_record = self::createVisitorRecordIfNotPresent($visitor);
 
         $page_record->visitors()->sync([$visitor_record->id => ['created_at' => Carbon::now()]]);
     }
 
+    /**
+     * Returns hit count for the requested resource.
+     *
+     * @param string $page hash provided by pageId()
+     * @return string Unique view count for requested resource
+     */
     private static function countHits($page)
     {
         $page_record = self::createPageIfNotPresent($page);
