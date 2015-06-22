@@ -83,6 +83,7 @@ class Counter
         } else {
             $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')->count();
         }
+        
         return number_format($hits);
     }
 
@@ -92,6 +93,7 @@ class Counter
     private static function hashVisitor($page)
     {
         $visitor = $_SERVER['REMOTE_ADDR'];
+        
         return hash("SHA256", $page . $visitor);
     }
 
