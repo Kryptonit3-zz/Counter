@@ -141,9 +141,8 @@ class Counter
     /*====================== PRIVATE METHODS =============================*/
 
     /**
-     * Generates a hash based on page identifier and current visitors IP Address.
+     * Generates a hash based on APP_KEY and current visitors IP Address.
      *
-     * @param string $page The hashed page identifier to salt IP Address with.
      * @return string
      */
     private static function hashVisitor()
@@ -210,7 +209,7 @@ class Counter
     {
         $page_record = self::createPageIfNotPresent($page);
 
-        $visitor = self::hashVisitor($page);
+        $visitor = self::hashVisitor();
 
         $visitor_record = self::createVisitorRecordIfNotPresent($visitor);
 
