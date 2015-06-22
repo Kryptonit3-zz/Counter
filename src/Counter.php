@@ -146,11 +146,11 @@ class Counter
      * @param string $page The hashed page identifier to salt IP Address with.
      * @return string
      */
-    private static function hashVisitor($page)
+    private static function hashVisitor()
     {
         $visitor = $_SERVER['REMOTE_ADDR'];
 
-        return hash("SHA256", $page . $visitor);
+        return hash("SHA256", env ('APP_KEY') . $visitor);
     }
 
     /**
