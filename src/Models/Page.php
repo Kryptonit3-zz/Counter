@@ -14,7 +14,6 @@ class Page extends Model
 
     public function visitors()
     {
-        return $this->belongsToMany('Kryptonit3\Counter\Models\Visitor', 'kryptonit3_counter_page_visitor', 'page_id', 'visitor_id')
-                    ->withTimestamps();
+        return $this->belongsToMany('Kryptonit3\Counter\Models\Visitor', 'kryptonit3_counter_page_visitor', 'page_id', 'visitor_id');
     }
 }
