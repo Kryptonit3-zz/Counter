@@ -150,7 +150,7 @@ class Counter
     {
         $visitor = $_SERVER['REMOTE_ADDR'];
 
-        return hash("SHA256", env ('APP_KEY') . $visitor);
+        return hash("SHA256", env('APP_KEY') . $visitor);
     }
 
     /**
