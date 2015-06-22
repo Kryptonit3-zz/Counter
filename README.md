@@ -2,15 +2,7 @@
 
 #### Installation
 
-Run the following commands:
-
-~~~
-composer require kryptonit3/counter
-
-php artisan vendor:publish --provider="Kryptonit3\Counter\CounterServiceProvider" --tag="migrations"
-
-php artisan migrate
-~~~
+Run the following command: `composer require kryptonit3/counter`
 
 Add the following to your `config\app.php` Service Providers
 
@@ -19,6 +11,14 @@ Add the following to your `config\app.php` Service Providers
 Add the following to your `config\app.php` Facades
 
 `'Counter'       => Kryptonit3\Counter\Facades\CounterFacade::class,`
+
+Then run the following:
+
+~~~
+php artisan vendor:publish --provider="Kryptonit3\Counter\CounterServiceProvider" --tag="migrations"
+
+php artisan migrate
+~~~
 
 #### How to Use
 
