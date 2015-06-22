@@ -7,6 +7,7 @@ use Kryptonit3\Counter\Models\Visitor;
 use Rhumsaa\Uuid\Uuid;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Carbon\Carbon;
+use DB;
 
 class Counter
 {
@@ -75,11 +76,11 @@ class Counter
      */
     public function allHits($days = null)
     {
-        $visitors = Visitor::all();
+        $hits = DB::table('kryptonit3_counter_page_visitor')->count();
         if ($days) {
-            $visitors = Visitor::where('created_at', '>=', Carbon::now()->subDays($days));
+            $hits = DB::table('kryptonit3_counter_page_visitor')->where('created_at', '>=', Carbon::now()->subDays($days))->count();
         }
-        return number_format($visitors->count());
+        return number_format($hits);
     }
 
 
