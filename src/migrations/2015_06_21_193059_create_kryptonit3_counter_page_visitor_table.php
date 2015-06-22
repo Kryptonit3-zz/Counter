@@ -19,7 +19,7 @@ class CreateKryptonit3CounterPageVisitorTable extends Migration
             $table->bigInteger('visitor_id')->unsigned();
             $table->foreign('visitor_id')->references('id')->on('kryptonit3_counter_visitor')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();
+            $table->timestamp('created_at');
         });
     }
 
