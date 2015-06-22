@@ -32,6 +32,13 @@ class Counter
      * @var bool
      */
     private static $honor_do_not_track = false;
+    
+    /**
+     * Singleton for the $page in question
+     *
+     * @var null|object
+     */
+    private static $current_page;
 
     /**
      * Show view count for the requested page.
@@ -194,11 +201,13 @@ class Counter
      */
     private static function createPageIfNotPresent($page)
     {
-        $page_record = Page::firstOrCreate([
-            'page' => $page
-        ]);
+        if (!isset(self::$current_page)) {
+            self::$current_page = Page::firstOrCreate([
+                'page' => $page
+            ]);
+        }
 
-        return $page_record;
+        return self::$current_page;
     }
 
     /**
