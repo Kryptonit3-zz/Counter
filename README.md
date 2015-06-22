@@ -36,10 +36,6 @@ If you would just like to process a hit for a page without displaying anything t
 
 Enjoy!
 
-##### To-Do List
-+ Add Caching
-
-
 Package influenced by: https://github.com/defuse/phpcount
 
 Pull requests are welcome.
