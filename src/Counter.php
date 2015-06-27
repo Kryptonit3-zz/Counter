@@ -8,6 +8,7 @@ use Rhumsaa\Uuid\Uuid;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Carbon\Carbon;
 use DB;
+use Cookie;
 
 class Counter
 {
@@ -150,14 +151,19 @@ class Counter
     }
 
     /**
-     * Generates a hash based on APP_KEY and current visitors IP Address.
+     * Generates a hash based on APP_KEY and current visitors set cookie
+     * If route caching is enabled and our route filter has not been loaded
+     * then fall back to IP Address.
      *
      * @return string
      */
     private static function hashVisitor()
     {
-        $visitor = $_SERVER['REMOTE_ADDR'];
-
+        if (Cookie::get('kryptonit3-counter') !== false) {
+            $visitor = Cookie::get('kryptonit3-counter');
+        } else {
+            $visitor = $_SERVER['REMOTE_ADDR'];
+        }
         return hash("SHA256", env('APP_KEY') . $visitor);
     }
 
@@ -224,7 +230,7 @@ class Counter
 
         $visitor_record = self::createVisitorRecordIfNotPresent($visitor);
 
-        $page_record->visitors()->sync([$visitor_record->id => ['created_at' => Carbon::now()]]);
+        $page_record->visitors()->sync([$visitor_record->id => ['created_at' => Carbon::now()]], false);
     }
 
     /**
