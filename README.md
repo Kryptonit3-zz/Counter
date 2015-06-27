@@ -44,7 +44,7 @@ How this differs from: https://github.com/weboAp/Visitor
 
 This package lets you see hit counts for specific pages/objects as well as an overall site hit count.
 
-Yes, it uses IP addresses so it is not 100% accurate. P.S. IP addresses are [hashed and salted](https://github.com/Kryptonit3/Counter/blob/master/src/Counter.php#L157-L162) so it would be quite a daunting task to decode the data. Nice package for the pro-anonymous people :)
+It also uses a uniquely generated cookie (fallback to IP) to give a more accurate reading. Nice package for the pro-anonymous people :)
 
 ~~~
 mysql> select * from kryptonit3_counter_page;
