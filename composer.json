@@ -18,5 +18,7 @@
         "illuminate/support": "~5.0",
         "php": ">=5.3.3",
         "jaybizzle/crawler-detect" :"1.*"
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
