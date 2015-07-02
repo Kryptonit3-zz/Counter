@@ -2,29 +2,39 @@
 
 #### Installation
 
-Run the following command: `composer require kryptonit3/counter`
+Run the following command: 
+```php
+composer require kryptonit3/counter
+```
 
 Add the following to your `config\app.php` Service Providers
 
-`Kryptonit3\Counter\CounterServiceProvider::class,`
+```php
+Kryptonit3\Counter\CounterServiceProvider::class,
+```
 
 Add the following to your `config\app.php` Facades
 
-`'Counter'       => Kryptonit3\Counter\Facades\CounterFacade::class,`
+```php
+'Counter' => Kryptonit3\Counter\Facades\CounterFacade::class,
+```
 
 Then run the following:
 
-~~~
+```bash
 php artisan vendor:publish --provider="Kryptonit3\Counter\CounterServiceProvider" --tag="migrations"
 
 php artisan migrate
-~~~
+```
 
-#### How to Use
+### How to Use
 
-For regular pages you just add `Counter::showAndCount('home')` ( for blades uses `{{ Counter::showAndCount('home') }}` ). Change `home` to a unique name for the page you are working with.
+#### Regular pages
+Just add `Counter::showAndCount('home')` ( for blades uses `{{ Counter::showAndCount('home') }}` ). Change `home` to a unique name for the page you are working with.
 
-For dynamic pages, such as user profiles, or job listings etc you may provide a dynamic element like this `Counter::showAndCount('user-profile', $user->id)` ( for blades use `{{ Counter::showAndCount('user-profile', $user->id) }}` ) Change `user-profile` to a unique name for the page you are working with.
+#### Dynamic pages
+For dynamic pages, such as user profiles, or job listings etc you may provide a dynamic element like this `Counter::showAndCount('user-profile', $user->id)` ( for blades use `{{ Counter::showAndCount('user-profile', $user->id) }}` ) 
+> Change `user-profile` to a unique name for the page you are working with.
 
 Number output is already formatted. So 3000 visitors will render as 3,000
 
@@ -36,17 +46,13 @@ If you would just like to process a hit for a page without displaying anything t
 
 Enjoy!
 
-Package influenced by: https://github.com/defuse/phpcount
+### Extra
+* Package influenced by: [defuse/phpcount](https://github.com/defuse/phpcount "defuse/phpcount") 
+* How this differs from: [weboAp/Visitor](https://github.com/weboAp/Visitor "weboAp/Visitor") 
 
-Pull requests are welcome.
+This package lets you see hit counts for specific pages/objects as well as an overall site hit count. It also uses a uniquely generated cookie (fallback to IP) to give a more accurate reading. Nice package for the pro-anonymous people :)
 
-How this differs from: https://github.com/weboAp/Visitor
-
-This package lets you see hit counts for specific pages/objects as well as an overall site hit count.
-
-It also uses a uniquely generated cookie (fallback to IP) to give a more accurate reading. Nice package for the pro-anonymous people :)
-
-~~~
+```bash
 mysql> select * from kryptonit3_counter_page;
 +----+--------------------------------------+
 | id | page                                 |
@@ -72,5 +78,7 @@ mysql> select * from kryptonit3_counter_page_visitor;
 |       2 |          1 | 2015-06-22 17:52:43 |
 +---------+------------+---------------------+
 2 rows in set (0.00 sec)
-~~~
+```
+
+## Pull requests are welcome.
 
