@@ -4,7 +4,7 @@
 
 Run the following command: 
 ```php
-composer require kryptonit3/counter
+composer require kryptonit3/counter:dev-master
 ```
 
 Add the following to your `config\app.php` Service Providers
