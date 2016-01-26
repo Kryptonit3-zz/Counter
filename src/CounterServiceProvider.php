@@ -15,7 +15,7 @@ class CounterServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bindShared('counter', function() {
+        $this->app->singleton('counter', function() {
             return $this->app->make('Kryptonit3\Counter\Counter');
         });
     }
