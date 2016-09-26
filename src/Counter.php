@@ -4,7 +4,7 @@ namespace Kryptonit3\Counter;
 
 use Kryptonit3\Counter\Models\Page;
 use Kryptonit3\Counter\Models\Visitor;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Carbon\Carbon;
 use DB;
