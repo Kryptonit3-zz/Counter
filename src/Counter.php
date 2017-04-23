@@ -159,7 +159,7 @@ class Counter
      */
     private static function hashVisitor()
     {
-        $cookie = Cookie::get('kryptonit3-counter');
+        $cookie = Cookie::get(env('COUNTER_COOKIE', 'kryptonit3-counter'));
         $visitor = ($cookie !== false) ? $cookie : $_SERVER['REMOTE_ADDR'];
 
         return hash("SHA256", env('APP_KEY') . $visitor);
