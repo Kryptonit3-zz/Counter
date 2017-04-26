@@ -27,6 +27,12 @@ php artisan vendor:publish --provider="Kryptonit3\Counter\CounterServiceProvider
 php artisan migrate
 ```
 
+Set Cookie Name in Laravel env Config file
+
+```php
+    COUNTER_COOKIE="Name of your cookie"
+```
+
 ### How to Use
 
 #### Regular pages
