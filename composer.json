@@ -18,5 +18,12 @@
         "illuminate/support": "5.*",
         "php": ">=5.3.3",
         "jaybizzle/crawler-detect" :"1.*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kryptonit3\\Counter\\CounterServiceProvider"
+            ]
+        }
     }
 }
