@@ -23,7 +23,10 @@
         "laravel": {
             "providers": [
                 "Kryptonit3\\Counter\\CounterServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Counter": "Kryptonit3\\Counter\\Facades\\CounterFacade"
+            }
         }
     }
 }
