@@ -125,6 +125,31 @@ class Counter
 
         return number_format($hits);
     }
+    
+    /**
+     * Return visitor count for all pages on the site.
+     * You may supply an integer if you would like to
+     * restrict counted visitors to a certain amount of days.
+     *
+     * Example: Show total visitors for the last 30 days
+     * Counter::allVisitors(30)
+     *
+     * @param null|integer $days
+     * @return string Unique visitor count for all pages
+     */
+    public function allVisitors($days = null)
+    {
+        $prefix = config('database.connections.' . config('database.default') . '.prefix');
+        if ($days) {
+            $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')
+                ->groupBy('visitor_id')
+                ->where('created_at', '>=', Carbon::now()->subDays($days))->count();
+        } else {
+            $hits = DB::table($prefix . 'kryptonit3_counter_page_visitor')->groupBy('visitor_id')->count();
+        }
+
+        return number_format($hits);
+    }    
 
 
     /*====================== PRIVATE METHODS =============================*/
