@@ -24,7 +24,7 @@ class Counter
      *
      * @var bool
      */
-    private static $ignore_bots = true;
+    private static $ignore_bots = false;
 
     /**
      * Check to determine if we will count hits
