@@ -184,8 +184,11 @@ class Counter
      */
     private static function hashVisitor()
     {
+        // set 127.0.0.1 for unit test
+        $ip = isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] ?  $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
+
         $cookie = Cookie::get(env('COUNTER_COOKIE', 'kryptonit3-counter'));
-        $visitor = ($cookie !== false) ? $cookie : $_SERVER['REMOTE_ADDR'];
+        $visitor = $cookie ? $cookie : $ip;
 
         return hash("SHA256", env('APP_KEY') . $visitor);
     }
