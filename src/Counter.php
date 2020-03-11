@@ -2,13 +2,13 @@
 
 namespace Kryptonit3\Counter;
 
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\DB;
 use Kryptonit3\Counter\Models\Page;
 use Kryptonit3\Counter\Models\Visitor;
 use Ramsey\Uuid\Uuid;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 use Carbon\Carbon;
-use DB;
-use Cookie;
 
 class Counter
 {

@@ -26,9 +26,7 @@ class CounterServiceProvider extends ServiceProvider
             __DIR__ . '/migrations/' => base_path('/database/migrations')
         ], 'migrations');
         
-        if (!$this->app->routesAreCached()) {
-            require __DIR__.'/routes.php';
-        }
+        require __DIR__.'/routes.php';
     }
 
     public function provides()
