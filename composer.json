@@ -15,8 +15,8 @@
     },
     "require": {
         "ramsey/uuid": "~3.0",
-        "illuminate/support": "^7.0",
-        "illuminate/database": "^7.0",
+        "illuminate/support": "^7.0|^8.0",
+        "illuminate/database": "^7.0|^8.0",
         "php": ">=7.3",
         "jaybizzle/crawler-detect" :"1.*"
     },
