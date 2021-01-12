@@ -14,7 +14,7 @@
         }
     },
     "require": {
-        "ramsey/uuid": "~3.0",
+        "ramsey/uuid": "~4.1",
         "illuminate/support": "^7.0|^8.0",
         "illuminate/database": "^7.0|^8.0",
         "php": ">=7.3",
